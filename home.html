@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="bootstrap social network template">
+    <meta name="author" content="">
+    <title>CRS4 social network</title>
+    <!-- Bootstrap and css styles -->
+	
+	
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css" type="text/css" media="screen">
+    <link href="assets/css/animate.min.css" rel="stylesheet" media="screen">
+    <link href="assets/css/dayday/dayday.css" rel="stylesheet" media="screen">
+    <link href="assets/css/dayday/timeline.css" rel="stylesheet" media="screen">
+    <link href="assets/css/dayday/home.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.bootstrap.min.css" type="text/css" media="screen">
+
+	<link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" type="text/css" media="screen">
+	
+	
+    <!-- <link href="assets/css/creative/gsdk-base.css" rel="stylesheet" /> -->
+    <!-- <link href="assets/css/dayday/login.css" rel="stylesheet" /> -->
+	
+ 
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+  </head>
+  <body id="body" ng-app="myApp">
+	  
+
+    <div id="login" class="image-container login-bg">
+        <div class="container" ng-controller="loginFormCtrl" ng-init="init()">
+            <div class="row animated fadeIn">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <!-- Wizard container -->   
+                    <div class="wizard-container "> 
+                        <div class="card wizard-card ct-wizard-sky" id="wizard">
+                            <form class="form-login text-center" ng-submit="submit()">
+                                <h1 class="form-login-heading text-muted">CRS4 Social</h1>
+                                <input type="text" class="form-control" placeholder="Email address" ng-model="user.username" required="" autofocus="">
+                                <input type="password" class="form-control" placeholder="Password" ng-model="user.password" required="">
+                                <button class="btn btn-lg btn-sky btn-fill btn-block" type="submit" >
+                                    <i class="fa fa-share"></i>
+                                    Login
+                                </button>
+                                <!-- <a href="register.html" class="text-center new-account">Create an account </a> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+	  
+	  
+	<section id="wrapper" style="display:none"> 
+    <!-- top navigation -->
+    <nav class="navbar navbar-fixed-top navbar-default navbar-principal">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+		  
+          <a class="navbar-brand" href=""><b>CRS4 Social</b></a>
+		  
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <div class="col-md-5 col-sm-4">         
+           <form class="navbar-form">
+              <div class="form-group" style="display:inline;">
+                <div class="input-group" style="display:table;" ng-controller="searchCtrl">
+                  <input class="form-control" ng-model="searchString" name="search" placeholder="Search..." autocomplete="off" autofocus="autofocus" type="text">
+                  <span class="input-group-addon" style="width:1%;">
+                    <span class="glyphicon glyphicon-search"   ng-click="search()" ></span>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+            <!-- <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+              <i class="fa fa-home"></i>Pages <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="index.html">Timeline 1</a></li>
+                <li><a href="time-line2.html">Timeline 2</a></li>
+                <li><a href="blank-profile.html">Blank profile</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="error404.html">Error 404</a></li>
+                <li><a href="error500.html">Error 500</a></li>
+              </ul>
+            </li> -->
+            <li class="dropdown" ng-controller="menuCtrl">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                <i class="fa fa-user"></i> {{getUser().firstname}} {{getUser().lastname}} <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <!-- <li><a href="#">One option</a></li>
+                <li><a href="#">Another option</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Profile</a></li> -->
+                <li><a href ng-click="logout()" >Logout</a></li>
+              </ul>
+            </li>
+            <li><a href="#" class="nav-controller"><i class="fa fa-comment"></i>Chat</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav><!-- end top navigation -->
+    <div style="margin-top:56px;"></div>
+	
+	<div class="row">
+	<div class="col-md-3 col-sm-4 hidden-xs animated fadeIn">
+      <!-- user options -->
+
+        <!-- <div  class="left-user-options" data-spy="affix">
+          <img src="img/Profile/profile.jpg" class="img-thumbnail img-circle img-user">
+          <div class="list-group">
+            <a href="index.html" class="list-group-item">
+              <i class="fa fa-bars"></i>
+              Timeline
+            </a>
+            <a href="photos.html" class="list-group-item">
+              <i class="fa fa-image"></i>
+              Photos
+            </a>
+            <a href="friends.html" class="list-group-item">
+              <i class="fa fa-users"></i>
+              Friends
+            </a>
+            <a href="messages.html" class="list-group-item">
+              <i class="fa fa-comment"></i>
+              Messages
+            </a>
+          </div>
+        </div> -->
+
+        <div class="col-md-12" >
+            <div id="loadspaces" class="panel panel-default panel-groups" ng-controller="spacelistCtrl" >
+              <div class="panel-heading">
+                <h3 class="panel-title pull-left"><i class="fa fa-users"></i>&nbsp;Spaces</h3>
+				<a href=""><i class="fa fa-plus text-info  pull-right" ng-click="createNewSpace()" title="New Space"></i></a>
+				 <!-- <button class="btn btn-sm btn-default pull-right">New</button> --> 
+				 <div class="clearfix"></div>
+              </div>
+              <div class="panel-body" >
+                <ul class="list-group">
+                  <li ng-repeat="s in spaces |orderBy: ['-ismember', 'name']" class="list-group-item" ng-mouseenter="s.showCtl = true" ng-mouseleave="s.showCtl = false">
+					  
+                    <div ng-class="{droparea: s.owner==userid}" class="hidden-sm hidden-xs col-md-4" data-ngcontroller="spacelistCtrl" data-dir="space" data-param="{{s._id}}">
+                        <img ng-src="{{s.image}}" alt="Group"   ng-class="{ 'space-gray': !s.ismember }" class="img-responsive img-circle" />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+						 
+                        <div  ng-hide="editorEnabled==s._id" class="name"><i class="fa fa-circle" style="color:{{s.color}}"> </i> {{s.name}}</div> <br/>
+						 <input ng-show="editorEnabled==s._id" class="form-control" ng-blur="editorEnabled=0; updateTitle(s._id)" ng-model="s.name"/>
+						<span class="name">{{s.desc}}</span>
+                    </div>
+					
+		
+
+						
+						<div class="dropdown ">
+						  <button class=" btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+						  <span class="caret"></span></button>
+						  <ul class="dropdown-menu dropdown-menu-right">	  
+	
+	
+							    <li ng-class="{ disabled: !s.ismember }"><a ng-click="selectSpace(s._id)">Show</a></li>
+	
+  								<li ng-class="{ disabled: s.level=='private' || s.ismember }"><a ng-click="joinSpace(s._id)" >Join</a></li>
+								
+  								<li ng-class="{ disabled: s.level=='public' || s.ismember }"><a ng-click="sendJoinRequest(s._id, s.name, s.owner)">Send Join Request</a></li>
+  								
+  								
+  								<li ng-class="{ disabled: !s.ismember }"><a ng-click="leaveSpace(s._id)">Leave</a></li>
+								
+								<li class="divider"></li>
+								<li ng-show="s.level=='private'" ng-class="{ disabled: s.owner != userid}" ><a  ng-click="changePublic(s._id)">Make Public</a></li>
+								<li ng-show="s.level=='public'" ng-class="{ disabled: s.owner != userid}" ><a  ng-click="changePrivate(s._id)">Make Private</a></li>
+								<li ng-class="{ disabled: s.owner != userid}" ><a  ng-click="editorEnabled = s._id">Edit</a></li>
+  								<li ng-class="{ disabled: s.owner != userid}" ><a  ng-click="removeSpace(s._id)">Remove Space</a></li>
+						
+						    
+						  </ul>
+						</div>
+						
+                    <div class="clearfix"></div>
+                  </li>
+                </ul>
+              </div>
+              			  
+            </div>
+          </div><!-- end groups -->
+		  
+		  
+		  
+        
+		
+		
+    </div><!-- en user options -->
+
+    <!-- middle container -->
+    <div class="col-md-5 col-sm-6 col-xs-12" id="postFormCtrl" ng-controller="postFormCtrl">
+        <!-- update status -->
+        <div class="col-md-12">
+          <div class="well"> 
+            <form  class="form-horizontal" role="form"  ng-submit="submit()" enctype="multipart/form-data">
+              <h4>What's New</h4>
+              <div class="form-group" style="padding:14px;">
+              <textarea class="form-control" placeholder="Update your status" ng-model="post.text"></textarea>
+			<h4>Spaces</h4>
+			
+			<tags-input class="ti-input-sm" ng-model="spacesTags" 
+			  add-on-enter="false"
+			  add-on-space="false"
+			  add-on-comma="false"
+			  add-on-blur="false"
+			  add-on-paste="false"
+			  display-property="name" key-property="id" placeholder="Add a space name">
+				<auto-complete source="loadItems($query)"></auto-complete>
+			 </tags-input>
+			
+			</div>
+              <input type="submit" class="btn btn-primary  pull-right" ng-class="{'disabled': post.text=='' || spacesTags==''}" value="Post"/>
+                
+
+			  <ul class="droparea list-inline" data-ngcontroller="postFormCtrl" data-dir="post">
+				  <li><a href=""><i class="fa fa-cloud text-info"></i></a></li>
+				  <li><a href=""><i class="fa fa-camera text-info"></i></a></li>
+				  <li><a href="" ng-click="videoctrl = !videoctrl"><i class="fa fa-film text-info"></i></a></li>
+				  <li><a href="" ng-click="showmap = !showmap"><i class="fa fa-map-marker text-info"></i></a></li>
+				  <!-- <li><a href="" ng-click="event = !event"><i class="fa fa-calendar text-info"></i></a></li> -->
+				  <li><a href="" ng-click="scheduler = !scheduler"><i class="fa fa-tasks text-info"></i></a></li>
+				  <li><a href="" ng-click="link = !link"><i class="fa fa-globe text-info"></i></a></li>
+				  <li><a href="" ng-click="options = !options"><i class="fa fa-gear text-info"></i></a></li>
+			  </ul>
+			  <!-- <span ng-show="event">
+				  <input name="start" class="form-control" type="datetime-local" ng-model="start"/>
+				  <input name="end" class="form-control" type="datetime-local" ng-model="end"/>
+		 	  </span> -->
+			  <input class="form-control" ng-show="link" type="url" ng-model="url" placeholder="type an url" ng-blur="loadwebshot()"/>
+			  <input class="form-control" ng-show="videoctrl"  ng-model="video" placeholder="type a you tube url"/>
+			  
+			  <div ng-show="options" class="form-group">
+			  <label >Public Content</label><input class="form-control"  type="checkbox" ng-model="facebook" placeholder="facebook"/>
+		  	  </div>
+                                             
+                          <i ng-show="loading" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></i> 
+
+               <span ng-repeat="f in post.files">
+				   <span ng-if="f.isImage == false">
+					    <a class="btn btn-default btn-responsive">
+		                  <i class="fa fa-times"></i>
+		                  {{f.originalName}}
+		                </a>
+					</span>
+					<img ng-show="f.isImage" class="thumb" style="height: 75px; border: 1px solid #000;margin: 10px 5px 0 0;" ng-src="{{f.preview}}" />
+                                        <img ng-show="f.isSite" class="thumb" style="height: 75px; border: 1px solid #000;margin: 10px 5px 0 0;" ng-src="{{f.preview}}" />
+					<!-- <span ng-if="f.isImage == true">
+					<img class="thumb" style="height: 75px; border: 1px solid #000;margin: 10px 5px 0 0;" ng-src="{{filesContent[$index]}}" />
+					</span> -->
+				</span>
+				<div ng-show="showmap" ui-map="myMap" ui-options="mapOptions" class="map-canvas"   ui-event="{'map-click': 'addMarker($event, $params)', 'map-zoom_changed': 'setZoomMessage(myMap.getZoom())' }"></div>
+           
+	      
+		   
+		    </form>
+          </div>
+		   <!-- <div  ng-show="scheduler" id="calendar" class="col-md-12"  style="margin: 0 auto;" ui-calendar="uiConfig.calendar"  ng-model="eventSources2"></div> -->
+		   <div  ng-show="scheduler" id="calendar" class="col-md-12"  style="margin: 0 auto;"></div>
+		   
+        </div><!-- end update status -->
+      
+
+		<span id="loadposts"  ng-controller="postlistCtrl" >
+		<div class="col-md-12  col-sm-12 col-xs-12">
+          <div class="panel-options">
+            <div class="navbar navbar-default navbar-cover">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#profile-opts-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                </div>
+                <div class="collapse navbar-collapse" id="profile-opts-navbar">
+                  <ul class="nav navbar-nav navbar-right">
+                    <li ng-class="{active: mode == 'timeline'}"><a href="" ng-click="init()"><i class="fa fa-list"></i> Timeline</a></li>
+                    <li ng-class="{active: mode == 'search'}" ><a ><i class="fa fa-search"></i> Search Result</a></li>
+                    <li ng-class="{active: mode == 'space'}"><a ><i class="fa fa-users"></i> {{getSpace(space).name}}</a></li>
+                    <!-- <li><a href="photos.html"><i class="fa fa-file-image-o"></i>Photos</a></li> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+		
+			
+			
+			<!-- <calendar>  dddd</calendar> -->
+			
+			<!-- <div class="social-calendar" ui-calendar="uiConfig.calendar"  ng-model="eventSources"></div> -->
+			<!-- <button ng-click="newEvent()">Nuovo evento</button>
+			<span ng-repeat="e in events">
+				<input type=date ng-model="e.start" value="{{e.start}}"/>
+			</span> -->
+			
+			
+	        <div class="col-md-12" ng-repeat="post in posts |orderBy: '-date'">
+	          <div class="panel panel-white post panel-shadow">
+	              <div class="post-heading">
+	                <div class="pull-left image">
+	                    <img ng-src="{{getUser(post.owner).image}}" class="img-rounded avatar img-responsive" alt="user profile image">
+	                </div>
+	                <div class="pull-left meta">
+	                    <div class="title h5">
+	                        <a href="#" class="post-user-name">{{getUser(post.owner).firstname}} {{getUser(post.owner).lastname}}</a> made a post on
+							
+							<i ng-repeat="s in post.spaces">{{getSpace(s).name}}  </i>
+							            
+	                    </div>
+	                    <h6 class="text-muted time"><i class="fa fa-clock-o"></i> {{dateDiff(post.date)}}</h6>
+						
+	                </div>
+	              </div>
+				 
+				 
+                  <ul class="photos">
+					<li ng-show="post.video">
+					<div anguvideo ng-model="post.video" ></div>
+					  <!-- <anguvideo ng-model="{{post.video}}" width="100%" height="200"></anguvideo> -->
+					</li>
+					<span ng-repeat="f in post.files">
+	                    <li ng-if="f.isImage==true">
+	                        <a href="{{f.filename}}">
+	                          <img ng-src="{{f.preview}}"  class="img-responsive">
+	                        </a>
+                                
+	                    </li>
+                            
+                            <li ng-if="f.isSite==true">
+	                        <a href="{{f.url}}" target="_blank">
+	                          <img ng-src="{{f.preview}}"  class="img-responsive">
+	                        </a>
+	                    </li>
+					</span>
+				</ul>
+				
+				
+<!--				<a href="#"
+				socialshare
+				socialshare-provider="facebook"
+				socialshare-text="720kb AngularJS Socialshare"
+				socialshare-hashtags=""
+				socialshare-url="localhost:3000/home.html">
+				Share me
+				</a>-->
+			
+				 <a href="#">
+				<img ng-show="post.location!=undefined"  ng-src="https://maps.googleapis.com/maps/api/staticmap?&zoom={{post.location.zoom}}&size=600x200&maptype=roadmap&markers=color:red%7Clabel:S%7C{{post.location.lat}},{{post.location.lng}}&key=AIzaSyARhruVcC1A4PkrzR-HObu_yhitonaNBcY"  class="social-img-map img-responsive show-in-modal">
+				 </a>
+				
+	              <div class="post-description">
+					  <span ng-if="post.owner == userid">
+						  <i ng-show="post.start" class="fa fa-calendar text-danger"></i>&nbsp; <a href="">{{post.start | date : 'dd-MM-yyyy HH:mm' }}</a>
+						  &nbsp; <a ng-show="post.end" href="">{{post.end | date : 'dd-MM-yyyy HH:mm' }}</a>
+					    <div ng-if="editorEnabled != post._id">
+					      {{post.text}}
+					       <a href="" ng-click="enableEditor(post._id)">Edit</a>
+					    </div>
+					     <div ng-if="editorEnabled==post._id">
+							 <textarea class="form-control" ng-model="post.text">{{post.text}}</textarea>
+					       <a  href="" ng-click="save(post._id)">Save</a>
+					     </div>
+					  </span>
+					  
+	                <span ng-if="post.owner!=userid" >
+						<i ng-show="post.start" class="fa fa-calendar text-danger"></i>&nbsp; <a href="">{{post.start | date : 'dd-MM-yyyy HH:mm' }}</a>&nbsp; <a ng-show="post.end" href="">{{post.end | date : 'dd-MM-yyyy HH:mm' }}</a>
+	              	<div>{{post.text}}</div>
+			      </span>
+				    <span ng-repeat="f in post.files">
+	 				   <span ng-if="f.isImage == false">
+	 					    <a href="../uploads/post/{{f.name}}" download="{{f.originalName}}" class="btn btn-default btn-responsive">
+	 		                  {{f.originalName}}
+	 		                </a>
+	 					</span>
+					</span>
+	                <div class="stats">
+	                    <a  class="btn btn-default stat-item" ng-click="like(post._id)">
+	                        <i class="fa fa-thumbs-up icon"></i>
+	                        {{post.like.length}}
+	                    </a>
+	                    <a class="btn btn-default stat-item" ng-click="bookmark(post._id)">
+	                        <i class="fa fa-bookmark icon"></i>
+	                        {{post.bookmark.length}}
+	                    </a>
+	                </div>
+	              </div>
+	              <div class="post-footer">
+	                <div class="input-group" > 
+	                    <input id="comment_{{post._id}}"  class="form-control" placeholder="Add a comment" type="text">
+	                    <span class="input-group-addon"  >
+	                        <a ><i class="fa fa-edit" ng-click="addComment(post._id);"></i></a>  
+	                    </span>
+	                </div>
+	                <ul class="comments-list">
+						<span ng-repeat="c in post.comments">
+	                    <li class="comment">
+	                        <a class="pull-left" href="#">
+	                            <img class="avatar" ng-src="../uploads/user/{{getUser(c.owner).username}}.jpg" alt="avatar">
+	                        </a>
+	                        <div class="comment-body">
+	                            <div class="comment-heading">
+	                                <h4 class="comment-user-name"><a href="#">{{getUser(c.owner).firstname}} {{getUser(c.owner).lastname}}</a></h4>
+	                                <h5 class="time"><i class="fa fa-clock-o"></i> {{dateDiff(c.date)}}</h5>
+	                            </div>
+	                            <p>{{c.text}}</p>
+	                        </div>
+	                    </li>
+					</span>
+	                </ul>
+	            </div>
+	          </div>
+	        </div><!-- end first post -->
+		</span>
+			
+
+       
+        
+      </div><!-- end middle container -->
+
+    <!-- right container -->
+    <div class="col-md-2 col-sm-2 hidden-xs right-content">
+      <div class="col-md-12 col-sm-12 sponsor-container">
+        <div id="bookmarklist" class="row" ng-controller="bookmarklistCtrl">
+          <div class="col-md-12">
+            <p><i class="fa fa-bookmark"></i> Bookmarks</p>
+            <div style="border:1px solid #3b5998"></div>
+          </div>
+		  	 
+          <div class="col-md-12 sponsor-list" ng-repeat="p in posts">
+            <img ng-src="{{p.files[0].filename}}" class="img-responsive  img-rounded show-in-modal">
+            <p class="sponsor-name"> {{getUser(p.owner).firstname}} {{getUser(p.owner).lastname}}</p>
+            <p class="sponsor-url"><a >{{p.start |date: dd-MM-yy}}</a></p>
+            <p class="sponsor-description">{{p.text.substring(0,300)}}</p>
+          </div>
+	  
+        </div>
+      </div>
+
+     
+    </div><!-- end right container -->
+	</div>
+
+	
+    <!-- Chat sidebar content-->
+	<section id="loadusers" ng-controller="userlistCtrl">
+    <div  class="chat-sidebar focus" style="max-height:800px; width:230px;" >
+      <div class="list-group text-left">
+        <p class="text-center visible-xs"><a href="#" class="hide-chat">Hide Contacts</a></p> 
+        <p class="text-center chat-title"><i class="fa fa-weixin">Users</i></p>  
+		
+        <a  href="#" class="list-group-item" ng-repeat="user in users |orderBy: ['-unreadMsgCnt','lastname']" ng-click="showMessages(user._id)">
+           <div><i class="fa fa-check-circle" ng-class="{'connected-status': user.active, 'absent-status': !user.active}"></i>
+         <img ng-src="{{user.image}}" class="img-chat img-thumbnail"/>  
+              <p class="chat-user-name">{{user.firstname}} {{user.lastname}}</p> <span ng-show="user.unreadMsgCnt>0" class="badge label-danger">{{user.unreadMsgCnt}}</span> </div>
+        </a>
+	    
+      </div>
+   
+
+   	 <!-- chat box content -->
+    </div><!-- end chat content-->
+	
+	
+    <div id="messagesCtrl" class="chat-window col-xs-10 col-md-3 col-sm-8 col-md-offset-5">
+      <div class="col-xs-12 col-md-12 col-sm-12">
+          <div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> {{friend.firstname}} {{friend.lastname}}</h3>
+                    </div>
+                    <div class="col-md-4 col-xs-4" style="text-align: right;">
+                        <a href=""><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+                        <a href="" ng-click="closeChatWindow()"><span class="glyphicon glyphicon-remove icon_close"></span></a>
+                    </div>
+                </div>
+                <div id="chatmain" class="panel-body msg_container_base">
+					
+					<span ng-repeat="m in messages |orderBy: 'date'" in-view="lineInView($index, $inview, $inviewpart)">
+						<span ng-if="friend._id == m.from">
+	                    <div class="row msg_container base_receive" >
+	                        <div class="col-md-2 col-xs-2 avatar-chat-box">
+	                            <img ng-src="{{friend.image}}" class=" img-responsive ">
+	                        </div>
+	                        <div class="col-md-10 col-xs-10">
+	                            <div class="messages msg_receive">
+	                                <p>{{m.text}}</p>
+                                        <div ng-if="m.type == 'joinRequest'">
+                                              
+                                            <button class="btn btn-success btn-sm" ng-click="approve(m.from, m.space)">Approve</button> 
+                                            <button class="btn btn-danger btn-sm" ng-click="decline(m.from, m.space)">Decline</button>
+                                        </div>
+	                                <time>{{dateDiff(m.date)}}</time>
+	                            </div>
+	                        </div>
+	                    </div>
+						</span>
+						<span ng-if="friend._id == m.to">
+	                    <div class="row msg_container base_sent" > 
+	                        <div class="col-md-10 col-xs-10">
+	                            <div class="messages msg_sent">
+	                                <p>{{m.text}}</p>
+	                                <time>{{dateDiff(m.date)}}</time>
+	                            </div>
+	                        </div>
+	                        <div class="col-md-2 col-xs-2 avatar-chat-box">
+	                            <img ng-src="{{my.image}}" class=" img-responsive ">
+	                        </div>
+	                    </div>
+						</span>
+					</span>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm chat_input" ng-model="text" placeholder="Write your message here..." ng-keypress="sendMessageKey($event)"   />
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary btn-sm" id="btn-chat" ng-click="sendMessage()">Send</button>
+                        </span>
+                    </div>
+                </div>
+          </div>
+      </div>
+    </div><!-- end chat box content -->
+	
+	</section>
+
+    <!--Info Modal Templates for show photos on click-->
+    <div id="modal-show" class="modal modal-message modal-primary fade" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fa fa-image"></i>
+                </div>
+                <div class="modal-body text-center">
+                  <div class="img-content">
+                    
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div> <!-- / .modal-content -->
+        </div> <!-- / .modal-dialog -->
+    </div>
+
+	
+    <div class="col-md-12">
+      <footer class="footer">
+        <P>&copy; CRS4 2016</P>
+      </footer>
+    </div>
+	
+	</div>
+    </section>
+    <!-- Bootstrap, Jquery and page scripts -->
+	
+	
+	<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/moment/min/moment.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/fullcalendar/dist/fullcalendar.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/angular-ui-calendar/src/calendar.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-event/dist/event.min.js"></script>
+	<script type="text/javascript" src="bower_components/angular-ui-map/ui-map.js"></script>
+	<script src="bower_components/ng-tags-input/ng-tags-input.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/fullcalendar/dist/lang/it.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/angular-touch/angular-touch.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script src="bower_components/anguvideo/js/anguvideo.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/angular-socialshare/dist/angular-socialshare.min.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+	<script src="jswebui.js"></script>
+	
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARhruVcC1A4PkrzR-HObu_yhitonaNBcY&v=3.exp&sensor=false&callback=onGoogleReady"></script>
+	
+	
+    <script type="text/javascript"  src="assets/js/dayday/dayday.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+ 
+
+  
+  
+</html>
