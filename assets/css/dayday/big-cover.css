@@ -1,0 +1,63 @@
+@media (max-width: 768px) {
+	.profile-photo {
+		width:140px !important;
+		height:140px !important;
+		top: 204px !important;
+		left: 12px !important;	
+	}
+}
+
+@media (min-width: 768px) {
+	.profile-photo {
+		width:135px !important;
+		height:135px !important;
+		top: 204px !important;
+		left: 30px !important;	
+	}
+}
+
+@media all and (max-width: 500px) { 
+	.profile-photo {
+		width:130px !important;
+		height:130px !important;
+		top: 220px !important;
+		left: 13px !important;	
+	}
+	.cover-name {
+		top: 289px !important;
+		left: 148px !important;
+		font-size: 12px !important;
+	}
+}
+
+.cover-name {
+	color: #fff;
+	text-rendering: optimizelegibility;
+	text-shadow: 0 0 3px rgba(0,0,0,.8);
+	width: 100%;
+	position: absolute;
+	top: 266px;
+	left: 215px;
+	font-size: 25px;
+	font-weight: bold;
+	width: 50%;
+}
+
+/*profile image*/
+.profile-photo {
+	box-shadow: 2px #000000;
+	display: block;
+	position: absolute;
+	left: 40px;
+	top: 180px;
+	padding: 1px;
+	width:160px;
+	height:160px;
+	position: relative;
+	z-index: 1000;
+	cursor: pointer;
+}
+
+.cover-photo{
+	margin-top: -8px;
+}
