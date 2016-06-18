@@ -5,11 +5,9 @@
     "padgav <gavino@crs4.it>"
   ],
   "description": "crs4 social network",
-  "moduleType": [
-    "node"
-  ],
+  "moduleType": [],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/padgav/socialjs",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -18,11 +16,20 @@
     "tests"
   ],
   "dependencies": {
-    "angular-ui-calendar": "^1.0.1",
-    "ng-tags-input": "3.0.0",
-    "angular-youtube-embed": "^1.0.2"
+    "angular-bootstrap": "^1.2.4",
+    "angular-socialshare": "angularjs-socialshare#^2.1.2",
+    "angular-touch": "^1.5.2",
+    "angular-animate": "^1.5.1",
+    "angular-ui-event": "^1.0.0",
+    "angular-ui-map": "^0.5.0",
+    "angular-youtube": "ng-youtube#^0.0.9",
+    "anguvideo": "^0.0.2",
+    "bootstrap": "^3.3.6",
+    "components-font-awesome": "~4.5.0",
+    "ui-bootstrap": "^1.2.4"
   },
   "resolutions": {
     "angular": "1.5.2"
-  }
+  },
+  "private": true
 }
