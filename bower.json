@@ -1,0 +1,28 @@
+{
+  "name": "socialcrs4",
+  "main": "index.js",
+  "authors": [
+    "padgav <gavino@crs4.it>"
+  ],
+  "description": "crs4 social network",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-calendar": "^1.0.1",
+    "ng-tags-input": "3.0.0",
+    "angular-youtube-embed": "^1.0.2"
+  },
+  "resolutions": {
+    "angular": "1.5.2"
+  }
+}
